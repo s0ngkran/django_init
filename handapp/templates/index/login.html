@@ -1,0 +1,37 @@
+{% extends './base_no_nav.html' %}
+
+{% block head %}
+<style>
+    .loginform{
+        max-width: 500px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div>
+    <div class="flexrow">
+        <div class="flexcolumn mar">
+
+            {% include './_user_profile.html' %}
+            
+            <div class="flexrow">
+                <h5>login</h5>
+            </div>
+            
+            <form method="post" class="loginform">
+                {% csrf_token %}
+                <input type="hidden" name="act" value="login">
+                <input type="text" class="form-control" name="username" placeholder="Username">
+                <input type="text" class="form-control" name="password" placeholder="Password">
+                <div class="flexrow flexend" style="margin-top:0.5em;">
+                    <a class="btn btn-link" href="{% url 'register-page' %}">register</a>
+                    <button class="btn btn-primary">login</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
