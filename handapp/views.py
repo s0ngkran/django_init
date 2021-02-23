@@ -2,16 +2,21 @@ from django.shortcuts import render
 from hand_collection.utils import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 class RegisterPage(MyView):
     template_name = 'index/register.html'
     form_user = UserForm
     form_profile = ProfileForm
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('index-page')
+        
         self.context.update({
             'form_user': self.form_user,
             'form_profile': self.form_profile,
         }) 
+        
         return self.render(request)
     def post(self, request, *args, **kwargs):
         data = request.POST.copy()
@@ -20,6 +25,9 @@ class RegisterPage(MyView):
             form1 = self.form_user(data)
             form2 = self.form_profile(data)
             if form1.is_valid and form2.is_valid:
+                if User.objects.filter(username=data['username']).exists():
+                    messages.warning(request, 'duplicate username')
+                    return redirect('register-page')
                 new_user = User.objects.create_user(
                     username = data['username'],
                     password = data['password'],
@@ -53,6 +61,8 @@ class LoginPage(MyView):
         if user is not None:
             login(request, user)
             return redirect('index-page')
+        messages.warning(request, 'not correct!')
+        return redirect('login-page')
         
 
 class LogoutPage(MyView):
