@@ -9,7 +9,7 @@ class MyView(View):
     def has_permission(self, request, *args, **kwargs):
         if request.user.is_superuser:
             return True
-        elif self.permission >= 9999 and request.user.is_authenticated:
+        elif self.permission <= 9999 and request.user.is_authenticated:
             return True
         else:
             return False
