@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.contrib.auth.models import User
-from hand_collection.utils import *
+from server.utils import *
 
             
 class UserForm(MyForm):

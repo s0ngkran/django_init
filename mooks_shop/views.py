@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from hand_collection.utils import *
+from server.utils import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages

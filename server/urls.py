@@ -1,4 +1,4 @@
-"""hand_collection URL Configuration
+"""server URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -13,12 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.urls import path, include
-from .views import *
+
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', IndexPage.as_view(), name='index-page'),
-    path('register/', RegisterPage.as_view(), name='register-page'),
-    path('login/', LoginPage.as_view(), name='login-page'),
-    path('logout/', LogoutPage.as_view(), name='logout-page'),
+    path('admin/', admin.site.urls),
+    path('', include('mooks_shop.urls')),
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+          
