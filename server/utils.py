@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, redirect
 from django import forms
+
 class MyView(View):
     context = {}
     def render(self, request, *args, **kwargs):
